@@ -12,8 +12,6 @@ class App extends Component {
   }
 
   switchNameHandler = (newName) => {
-    // console.log('It was clicked!')
-    // this.state.people[0].name = 'Cesarone' --> Wrong way!!!
     this.setState({
       people: [
         { name: newName, age: '36'},
@@ -23,21 +21,43 @@ class App extends Component {
     )
   }
 
+  nameChangedhandler = (event) => {
+    this.setState({
+      people: [
+        { name: 'Cesare', age: '36'},
+        { name: event.target.value, age: '26'},
+        { name: 'Luca', age: '30'}
+      ]}
+    )
+  }
+
   render() {
+
+    const style = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px light gray',
+      padding: '8px',
+      cursor: 'pointer'
+    }
+
     return (
       <div className="App">
         <h1>Hi! I'm a React App</h1>
-        <button onClick={() => this.switchNameHandler("Cesarone")}> Switch Name </button>
+        <button
+          style={style}
+          onClick={() => this.switchNameHandler("Cesarone")}> Switch Name </button>
         <Person
           name={this.state.people[0].name}
           age={this.state.people[0].age}> Watching TV Series </Person>
         <Person
           name={this.state.people[1].name}
           age={this.state.people[1].age}
-          click={this.switchNameHandler.bind(this, "Ceasar")}> Coding </Person>
+          click={this.switchNameHandler.bind(this, "Ceasar")}
+          changed={this.nameChangedhandler}> Riding E-Scooters </Person>
         <Person
           name={this.state.people[2].name}
-          age={this.state.people[2].age}> Eating Vegan </Person>
+          age={this.state.people[2].age}> Eating Cardboard </Person>
       </div>
     );
   }
