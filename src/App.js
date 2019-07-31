@@ -1,34 +1,46 @@
-import React, { Component } from 'react';
-import Person from './Person/Person';
-import './App.css';
+import React, { Component } from 'react'
+import Person from './Person/Person'
+import './App.css'
 
 class App extends Component {
   state = {
     people: [
-      { name: 'Cesare', age: '36'},
-      { name: 'Manu', age: '26'},
-      { name: 'Luca', age: '30'}
+      { id: 'zaq14', name: 'Cesare', age: '36'},
+      { id: 'xsw25', name: 'Manu', age: '26'},
+      { id: 'cde36', name: 'Luca', age: '30'}
     ],
     showPeople: false
   }
 
-  nameChangedhandler = (event) => {
-    this.setState({
-      people: [
-        { name: 'Cesare', age: '36'},
-        { name: event.target.value, age: '26'},
-        { name: 'Luca', age: '30'}
-      ]}
-    )
+  nameChangedhandler = (event, id) => {
+    const personIndex = this.state.people.findIndex(p => {
+      return p.id === id
+    })
+
+    const person = {
+      ...this.state.people[personIndex]
+    }
+
+    // Alternative way below:
+    // const person = Object.assign({}, this.state.people[personIndex])
+
+    person.name = event.target.value
+
+    const people = [...this.state.people]
+
+    people[personIndex] = person
+
+    this.setState({ people: people})
+
   }
 
   togglePeopleHandler = () => {
-    const showing = this.state.showPeople;
+    const showing = this.state.showPeople
     this.setState({ showPeople: !showing })
   }
 
   deletePersonHandler = (personIndex) => {
-    const people = this.state.people;
+    const people = [...this.state.people]
     people.splice(personIndex, 1)
     this.setState({ people: people})
   }
@@ -43,7 +55,7 @@ class App extends Component {
       cursor: 'pointer'
     }
 
-    let people = null;
+    let people = null
 
     if ( this.state.showPeople ) {
       people = (
@@ -53,7 +65,9 @@ class App extends Component {
               return <Person
                 click={ () => this.deletePersonHandler(index) }
                 name={ person.name }
-                age={ person.age }/>
+                age={ person.age }
+                key={ person.id }
+                changed={ (event) => this.nameChangedhandler(event, person.id) } />
             })
           }
         </div>
@@ -68,18 +82,18 @@ class App extends Component {
           onClick={ this.togglePeopleHandler }> Show Peoples </button>
         { people }
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
 
 
 // Functional approach below (with setState() hook example):
 
-// import React, { Component, useState } from 'react';
-// import Person from './Person/Person';
-// import './App.css';
+// import React, { Component, useState } from 'react'
+// import Person from './Person/Person'
+// import './App.css'
 //
 // const app = props => {
 //   const [ peopleState, setPeopleState ] = useState({
@@ -114,9 +128,9 @@ export default App;
 //         name={peopleState.people[2].name}
 //         age={peopleState.people[2].age}> Eating Vegan </Person>
 //     </div>
-//   );
+//   )
 // }
 //
 //
-// export default app;
+// export default app
 //
