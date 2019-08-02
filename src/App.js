@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Person from './Person/Person'
+import Person from './Components/Person/Person'
+import Validation from './Components/Validation/Validation'
 import './App.css'
 
 class App extends Component {
@@ -9,29 +10,19 @@ class App extends Component {
       { id: 'xsw25', name: 'Manu', age: '26'},
       { id: 'cde36', name: 'Luca', age: '30'}
     ],
-    showPeople: false
+    showPeople: false,
+    text: ''
   }
 
   nameChangedhandler = (event, id) => {
-    const personIndex = this.state.people.findIndex(p => {
-      return p.id === id
-    })
-
-    const person = {
-      ...this.state.people[personIndex]
-    }
-
+    const personIndex = this.state.people.findIndex(p => { return p.id === id })
+    const person = { ...this.state.people[personIndex] }
     // Alternative way below:
     // const person = Object.assign({}, this.state.people[personIndex])
-
     person.name = event.target.value
-
     const people = [...this.state.people]
-
     people[personIndex] = person
-
     this.setState({ people: people})
-
   }
 
   togglePeopleHandler = () => {
@@ -43,6 +34,11 @@ class App extends Component {
     const people = [...this.state.people]
     people.splice(personIndex, 1)
     this.setState({ people: people})
+  }
+
+  displayTextHandler = (event) => {
+    const displayedText = this.state.text
+    this.setState({ text: event.target.value })
   }
 
   render() {
@@ -74,13 +70,26 @@ class App extends Component {
       )
     }
 
+    let message1 = ( <p> Text is too Short, fella! </p> )
+    let message2 = ( <p> Bravo, dude! </p> )
+
+    this.state.text.length < 5 ? message1 : message2
+
     return (
       <div className="App">
         <h1>Hi! I'm a React App</h1>
         <button
           style={style}
-          onClick={ this.togglePeopleHandler }> Show Peoples </button>
+          onClick={ this.togglePeopleHandler }> Show People </button>
         { people }
+        <br/><br/>
+        Type some text to know its length:
+        <p>
+          <input type="text" onChange={this.displayTextHandler} />
+        </p>
+        <Validation
+          length={ this.state.text.length }/>
+        { this.state.text.length < 5 ? message1 : message2 }
       </div>
     )
   }
