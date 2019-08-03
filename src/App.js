@@ -78,7 +78,7 @@ class App extends Component {
       characters = (
         <div>
           {
-            wordsList.map((letter) => {
+            wordsList.map((letter, index) => {
               return <Char
                 letter={ letter } />
             })
@@ -111,8 +111,8 @@ class App extends Component {
         </p>
         <Validation
           length={ this.state.textToValidate.length }/>
-        <p> { message } </p>
-        <p> { characters } </p>
+        { message }
+        { characters }
       </div>
     )
   }

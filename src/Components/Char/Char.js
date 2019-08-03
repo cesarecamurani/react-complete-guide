@@ -3,7 +3,11 @@ import './Char.css'
 
 const char = (props) => {
   return (
-    <div className="Char"> { props.letter } </div>
+    <div className="Char">
+      <p onClick= { props.click }>
+        { props.letter }
+      </p>
+    </div>
   )
 }
 
