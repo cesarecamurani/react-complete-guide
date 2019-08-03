@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Person from './Components/Person/Person'
+import Char from './Components/Char/Char'
 import Validation from './Components/Validation/Validation'
 import './App.css'
 
@@ -70,14 +71,30 @@ class App extends Component {
       )
     }
 
+    let wordsList = this.state.textToValidate.split('')
+    let characters = null
+
+    if ( this.state.textToValidate.length >= 1 ) {
+      characters = (
+        <div>
+          {
+            wordsList.map((letter) => {
+              return <Char
+                letter={ letter } />
+            })
+          }
+        </div>
+      )
+    }
+
     let message = ''
 
     if ( this.state.textToValidate.length <= 0 ) {
-      message
+      message = ''
     } else if ( this.state.textToValidate.length < 5 ) {
       message = 'Too short, boy!'
     } else {
-      message = 'Long enough, fella!'
+      message = 'Now it\'s long enough, fella!'
     }
 
     return (
@@ -94,7 +111,8 @@ class App extends Component {
         </p>
         <Validation
           length={ this.state.textToValidate.length }/>
-          { message }
+        <p> { message } </p>
+        <p> { characters } </p>
       </div>
     )
   }
