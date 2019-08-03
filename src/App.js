@@ -11,7 +11,7 @@ class App extends Component {
       { id: 'cde36', name: 'Luca', age: '30'}
     ],
     showPeople: false,
-    text: ''
+    textToValidate: ''
   }
 
   nameChangedhandler = (event, id) => {
@@ -37,8 +37,8 @@ class App extends Component {
   }
 
   displayTextHandler = (event) => {
-    const displayedText = this.state.text
-    this.setState({ text: event.target.value })
+    const displayedText = event.target.value
+    this.setState({ textToValidate: displayedText })
   }
 
   render() {
@@ -70,26 +70,31 @@ class App extends Component {
       )
     }
 
-    let message1 = ( <p> Text is too Short, fella! </p> )
-    let message2 = ( <p> Bravo, dude! </p> )
+    let message = ''
 
-    this.state.text.length < 5 ? message1 : message2
+    if ( this.state.textToValidate.length <= 0 ) {
+      message
+    } else if ( this.state.textToValidate.length < 5 ) {
+      message = 'Too short, boy!'
+    } else {
+      message = 'Long enough, fella!'
+    }
 
     return (
       <div className="App">
         <h1>Hi! I'm a React App</h1>
         <button
+          id="button"
           style={style}
           onClick={ this.togglePeopleHandler }> Show People </button>
         { people }
-        <br/><br/>
-        Type some text to know its length:
+        <p> Type some text to know its length: </p>
         <p>
           <input type="text" onChange={this.displayTextHandler} />
         </p>
         <Validation
-          length={ this.state.text.length }/>
-        { this.state.text.length < 5 ? message1 : message2 }
+          length={ this.state.textToValidate.length }/>
+          { message }
       </div>
     )
   }
