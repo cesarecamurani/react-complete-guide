@@ -12,10 +12,10 @@ class App extends Component {
       { id: 'cde36', name: 'Luca', age: '30'}
     ],
     showPeople: false,
-    textToValidate: ''
+    userInput: ''
   }
 
-  nameChangedhandler = (event, id) => {
+  nameChangehandler = (event, id) => {
     const personIndex = this.state.people.findIndex(p => { return p.id === id })
     const person = { ...this.state.people[personIndex] }
     // Alternative way below:
@@ -38,8 +38,14 @@ class App extends Component {
   }
 
   displayTextHandler = (event) => {
-    const displayedText = event.target.value
-    this.setState({ textToValidate: displayedText })
+    this.setState({ userInput: event.target.value })
+  }
+
+  deleteCharHandler = (charIndex) => {
+    const charsList = this.state.userInput.split('')
+    charsList.splice(charIndex, 1)
+    const updatedCharList = charsList.join('')
+    this.setState({ userInput: updatedCharList})
   }
 
   render() {
@@ -64,38 +70,19 @@ class App extends Component {
                 name={ person.name }
                 age={ person.age }
                 key={ person.id }
-                changed={ (event) => this.nameChangedhandler(event, person.id) } />
+                changed={ (event) => this.nameChangehandler(event, person.id) } />
             })
           }
         </div>
       )
     }
 
-    let wordsList = this.state.textToValidate.split('')
-    let characters = null
-
-    if ( this.state.textToValidate.length >= 1 ) {
-      characters = (
-        <div>
-          {
-            wordsList.map((letter, index) => {
-              return <Char
-                letter={ letter } />
-            })
-          }
-        </div>
-      )
-    }
-
-    let message = ''
-
-    if ( this.state.textToValidate.length <= 0 ) {
-      message = ''
-    } else if ( this.state.textToValidate.length < 5 ) {
-      message = 'Too short, boy!'
-    } else {
-      message = 'Now it\'s long enough, fella!'
-    }
+    const characters = this.state.userInput.split('').map((char, index) => {
+      return <Char
+                character={ char }
+                key={ index }
+                clicked={ () => this.deleteCharHandler(index) }/>
+    })
 
     return (
       <div className="App">
@@ -103,15 +90,16 @@ class App extends Component {
         <button
           id="button"
           style={style}
-          onClick={ this.togglePeopleHandler }> Show People </button>
+          onClick={ this.togglePeopleHandler }> Show People
+        </button>
         { people }
         <p> Type some text to know its length: </p>
         <p>
-          <input type="text" onChange={this.displayTextHandler} />
+          <input type="text"
+            onChange={ this.displayTextHandler }
+            value={ this.state.userInput} />
         </p>
-        <Validation
-          length={ this.state.textToValidate.length }/>
-        { message }
+        <Validation length={ this.state.userInput.length } />
         { characters }
       </div>
     )
