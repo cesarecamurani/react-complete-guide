@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Radium from 'radium'
 import Person from './Components/Person/Person'
 import Char from './Components/Char/Char'
 import Validation from './Components/Validation/Validation'
@@ -9,7 +10,13 @@ class App extends Component {
     people: [
       { id: 'zaq14', name: 'Cesare', age: '36'},
       { id: 'xsw25', name: 'Manu', age: '26'},
-      { id: 'cde36', name: 'Luca', age: '30'}
+      { id: 'cde36', name: 'Luca', age: '30'},
+      { id: 'p0o9i', name: 'Pippo', age: '32'},
+      { id: '0p9o8', name: 'Gennaro', age: '28'},
+      { id: 'mnbvc', name: 'Gino', age: '31'},
+      { id: 'cdfvg', name: 'Pablo', age: '45'},
+      { id: 'zxcvb', name: 'Baro', age: '23'},
+      { id: 'zaxsc', name: 'Bande', age: '42'},
     ],
     showPeople: false,
     userInput: ''
@@ -56,7 +63,11 @@ class App extends Component {
       font: 'inherit',
       border: '1px light gray',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black',
+      }
     }
 
     let people = null
@@ -77,6 +88,10 @@ class App extends Component {
         </div>
       )
       style.backgroundColor = 'red'
+      style[':hover'] = {
+        backgroundColor: 'orange',
+        color: 'black'
+      }
     }
 
     const characters = this.state.userInput.split('').map((char, index) => {
@@ -86,9 +101,15 @@ class App extends Component {
                 clicked={ () => this.deleteCharHandler(index) }/>
     })
 
+    const classes = []
+    if (this.state.people.length <= 9) { classes.push('green') }
+    if (this.state.people.length <= 5) { classes.push('yellow') }
+    if (this.state.people.length <= 2) { classes.push('red') }
+
     return (
       <div className="App">
-        <h1>Hi! I'm a React App</h1>
+        <h1> Hi! I'm a React App </h1>
+        <p className={classes.join(' ')}> People Number </p>
         <button
           id="button"
           style={style}
@@ -108,51 +129,4 @@ class App extends Component {
   }
 }
 
-export default App
-
-
-// Functional approach below (with setState() hook example):
-
-// import React, { Component, useState } from 'react'
-// import Person from './Person/Person'
-// import './App.css'
-//
-// const app = props => {
-//   const [ peopleState, setPeopleState ] = useState({
-//     people: [
-//       { name: 'Cesare', age: '36'},
-//       { name: 'Manu', age: '26'},
-//       { name: 'Luca', age: '30'}
-//     ]
-//   })
-//
-//   const switchNameHandler = () => {
-//     setPeopleState({
-//       people: [
-//         { name: 'Cesarone', age: '36'},
-//         { name: 'Manu', age: '26'},
-//         { name: 'Luca', age: '30'}
-//       ]}
-//     )
-//   }
-//
-//   return (
-//     <div className="App">
-//       <h1>Hi! I'm a React App</h1>
-//       <button onClick={switchNameHandler}> Switch Name </button>
-//       <Person
-//         name={peopleState.people[0].name}
-//         age={peopleState.people[0].age}> Watching TV Series </Person>
-//       <Person
-//         name={peopleState.people[1].name}
-//         age={peopleState.people[1].age}> Coding </Person>
-//       <Person
-//         name={peopleState.people[2].name}
-//         age={peopleState.people[2].age}> Eating Vegan </Person>
-//     </div>
-//   )
-// }
-//
-//
-// export default app
-//
+export default Radium(App)
