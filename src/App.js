@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Person from './Components/Person/Person'
 import Char from './Components/Char/Char'
 import Validation from './Components/Validation/Validation'
-import './App.css'
+import classes from './App.css'
 
 class App extends Component {
   state = {
@@ -92,15 +92,15 @@ class App extends Component {
                 clicked={ () => this.deleteCharHandler(index) }/>
     })
 
-    const classes = []
-    if (this.state.people.length <= 9) { classes.push('green') }
-    if (this.state.people.length <= 5) { classes.push('yellow') }
-    if (this.state.people.length <= 2) { classes.push('red') }
+    const assignedClasses = []
+    if (this.state.people.length <= 9) { assignedClasses.push(classes.green) }
+    if (this.state.people.length <= 5) { assignedClasses.push(classes.yellow) }
+    if (this.state.people.length <= 2) { assignedClasses.push(classes.red) }
 
     return (
-      <div className="App">
+      <div className={classes.App}>
         <h1> Hi! I'm a React App </h1>
-        <p className={classes.join(' ')}> People Number </p>
+        <p className={assignedClasses.join(' ')}> People Number </p>
         <button
           id="button"
           style={style}
