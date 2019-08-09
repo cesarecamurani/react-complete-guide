@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Radium from 'radium'
 import Person from './Components/Person/Person'
 import Char from './Components/Char/Char'
 import Validation from './Components/Validation/Validation'
@@ -16,7 +15,7 @@ class App extends Component {
       { id: 'mnbvc', name: 'Gino', age: '31'},
       { id: 'cdfvg', name: 'Pablo', age: '45'},
       { id: 'zxcvb', name: 'Baro', age: '23'},
-      { id: 'zaxsc', name: 'Bande', age: '42'},
+      { id: 'zaxsc', name: 'Bande', age: '42'}
     ],
     showPeople: false,
     userInput: ''
@@ -63,11 +62,7 @@ class App extends Component {
       font: 'inherit',
       border: '1px light gray',
       padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black',
-      }
+      cursor: 'pointer'
     }
 
     let people = null
@@ -88,10 +83,6 @@ class App extends Component {
         </div>
       )
       style.backgroundColor = 'red'
-      style[':hover'] = {
-        backgroundColor: 'orange',
-        color: 'black'
-      }
     }
 
     const characters = this.state.userInput.split('').map((char, index) => {
@@ -129,4 +120,4 @@ class App extends Component {
   }
 }
 
-export default Radium(App)
+export default App
