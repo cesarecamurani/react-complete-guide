@@ -55,17 +55,8 @@ class App extends Component {
   }
 
   render() {
-
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px light gray',
-      padding: '8px',
-      cursor: 'pointer'
-    }
-
     let people = null
+    let btnClass = ''
 
     if ( this.state.showPeople ) {
       people = (
@@ -82,7 +73,7 @@ class App extends Component {
           }
         </div>
       )
-      style.backgroundColor = 'red'
+      btnClass = classes.red
     }
 
     const characters = this.state.userInput.split('').map((char, index) => {
@@ -100,10 +91,11 @@ class App extends Component {
     return (
       <div className={classes.App}>
         <h1> Hi! I'm a React App </h1>
-        <p className={assignedClasses.join(' ')}> People Number </p>
+        <p className={assignedClasses.join(' ')}>
+          People Number: { this.state.people.length }
+        </p>
         <button
-          id="button"
-          style={style}
+          className={btnClass}
           onClick={ this.togglePeopleHandler }> Show People
         </button>
         { people }
@@ -113,7 +105,7 @@ class App extends Component {
             onChange={ this.displayTextHandler }
             value={ this.state.userInput} />
         </p>
-        <Validation length={ this.state.userInput.length } />
+        Characters: <Validation length={ this.state.userInput.length } />
         { characters }
       </div>
     )
