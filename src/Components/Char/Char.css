@@ -1,7 +1,10 @@
 .Char {
   display: inline-block;
+  background-color: green;
+  color: black;
   padding: 16px;
   text-align: center;
   margin: 16px;
   border: 1px solid white;
+  cursor: pointer;
 }

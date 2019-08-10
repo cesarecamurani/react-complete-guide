@@ -14,10 +14,10 @@
   color: red;
 }
 
-
 .App button {
   background-color: green;
   color: white;
+  font: inherit;
   border: 1px solid white;
   padding: 8px;
   cursor: pointer;

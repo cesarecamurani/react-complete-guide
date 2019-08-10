@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Person from './Components/Person/Person'
-import Char from './Components/Char/Char'
-import Validation from './Components/Validation/Validation'
+import Person from '../Components/People/Person/Person'
+import Char from '../Components/Char/Char'
+import Validation from '../Components/Validation/Validation'
 import classes from './App.css'
 
 class App extends Component {
@@ -78,7 +78,7 @@ class App extends Component {
 
     const characters = this.state.userInput.split('').map((char, index) => {
       return <Char
-                character={ char }
+                character={ char.toUpperCase() }
                 key={ index }
                 clicked={ () => this.deleteCharHandler(index) }/>
     })
@@ -105,7 +105,7 @@ class App extends Component {
             onChange={ this.displayTextHandler }
             value={ this.state.userInput} />
         </p>
-        Characters: <Validation length={ this.state.userInput.length } />
+        Chars count: <Validation length={ this.state.userInput.length } />
         { characters }
       </div>
     )
