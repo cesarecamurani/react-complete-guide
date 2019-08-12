@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Cockpit from '../Components/Cockpit/Cockpit'
 import Person from '../Components/People/Person/Person'
 import People from '../Components/People/People'
 import Char from '../Components/Char/Char'
@@ -22,6 +23,8 @@ class App extends Component {
     userInput: ''
   }
 
+  // People handlers:
+
   nameChangehandler = (event, id) => {
     const personIndex = this.state.people.findIndex(p => { return p.id === id })
     const person = { ...this.state.people[personIndex] }
@@ -44,6 +47,8 @@ class App extends Component {
     this.setState({ people: people})
   }
 
+  //  Char handlers:
+
   displayTextHandler = (event) => {
     this.setState({ userInput: event.target.value })
   }
@@ -57,42 +62,29 @@ class App extends Component {
 
   render() {
     let people = null
-    let btnClass = ''
 
     if ( this.state.showPeople ) {
-      people = (
-        <div>
-          <People
-            people={this.state.people}
-            clicked={this.deletePersonHandler}
-            changed={this.nameChangehandler}/>
-        </div>
+      people = ( <People
+        people={this.state.people}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangehandler}/>
       )
-      btnClass = classes.red
     }
 
     const characters = this.state.userInput.split('').map((char, index) => {
       return <Char
-                character={ char.toUpperCase() }
-                key={ index }
-                clicked={ () => this.deleteCharHandler(index) }/>
+        character={ char.toUpperCase() }
+        key={ index }
+        clicked={ () => this.deleteCharHandler(index) }/>
     })
-
-    const assignedClasses = []
-    if (this.state.people.length <= 9) { assignedClasses.push(classes.green) }
-    if (this.state.people.length <= 5) { assignedClasses.push(classes.yellow) }
-    if (this.state.people.length <= 2) { assignedClasses.push(classes.red) }
 
     return (
       <div className={classes.App}>
-        <h1> Hi! I'm a React App </h1>
-        <p className={assignedClasses.join(' ')}>
-          People Number: { this.state.people.length }
-        </p>
-        <button
-          className={btnClass}
-          onClick={ this.togglePeopleHandler }> Show People
-        </button>
+        <Cockpit
+          people={this.state.people}
+          clicked={this.togglePeopleHandler}
+          showPeople={this.state.showPeople}
+         />
         { people }
         <p> Type some text to know its length: </p>
         <p>
