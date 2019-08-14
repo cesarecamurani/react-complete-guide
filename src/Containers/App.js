@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import Cockpit from '../Components/Cockpit/Cockpit'
-import Person from '../Components/People/Person/Person'
+// import Person from '../Components/People/Person/Person'
 import People from '../Components/People/People'
 import Char from '../Components/Char/Char'
 import Validation from '../Components/Validation/Validation'
 import classes from './App.css'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    console.log('[App.js] constructor')
+  }
+
   state = {
     people: [
       { id: 'zaq14', name: 'Cesare', age: '36'},
@@ -21,6 +26,15 @@ class App extends Component {
     ],
     showPeople: false,
     userInput: ''
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedstatefromProps')
+    return state
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount')
   }
 
   // People handlers:
@@ -61,6 +75,8 @@ class App extends Component {
   }
 
   render() {
+    console.log('[App.js] render')
+
     let people = null
 
     if ( this.state.showPeople ) {
