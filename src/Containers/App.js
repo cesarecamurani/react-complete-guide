@@ -25,6 +25,7 @@ class App extends Component {
       { id: 'zaxsc', name: 'Bande', age: '42'}
     ],
     showPeople: false,
+    showCockpit: true,
     userInput: ''
   }
 
@@ -96,12 +97,21 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
-        <Cockpit
-          title={this.props.title}
-          people={this.state.people}
-          clicked={this.togglePeopleHandler}
-          showPeople={this.state.showPeople}
-         />
+        <button
+          onClick={() => {
+            this.setState({showCockpit: false})
+          }}
+        >
+          Remove Cockpit
+        </button>
+        { this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.title}
+            peopleLength={this.state.people.length}
+            clicked={this.togglePeopleHandler}
+            showPeople={this.state.showPeople}
+           />
+        ) : null }
         { people }
         <p> Type some text to know its length: </p>
         <p>
