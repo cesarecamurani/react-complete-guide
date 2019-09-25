@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import classes from './Cockpit.css'
+import AuthContext from '../../context/auth-context';
 
 const cockpit = (props) => {
   useEffect(() => {
     console.log('[Cockpit.js] useEffect')
-    setTimeout(() => {
-      alert('useEffect is in use!')
-    }, 1000)
     return () => {
       console.log('[Cockpit.js] cleanup work in useEffect')
     }
@@ -37,6 +35,9 @@ const cockpit = (props) => {
         className={btnClass}
         onClick={ props.clicked }> Show People
       </button>
+      <AuthContext.Consumer>
+      {context => <button onClick={context.login}>Log in</button>}
+      </AuthContext.Consumer>
     </div>
   )
 }

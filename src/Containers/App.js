@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import Cockpit from '../Components/Cockpit/Cockpit'
-// import Person from '../Components/People/Person/Person'
-import People from '../Components/People/People'
-import Char from '../Components/Char/Char'
-import Validation from '../Components/Validation/Validation'
 import classes from './App.css'
 import Aux from '../HOC/Aux'
 import withClass from '../HOC/withClass'
-
+import Char from '../Components/Char/Char'
+import People from '../Components/People/People'
+import Cockpit from '../Components/Cockpit/Cockpit'
+import Validation from '../Components/Validation/Validation'
+import AuthContext from '../context/auth-context'
+  
 class App extends Component {
   constructor(props) {
     super(props)
@@ -28,7 +28,8 @@ class App extends Component {
     ],
     showPeople: false,
     showCockpit: true,
-    userInput: ''
+    userInput: '',
+    authenticated: false
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -38,6 +39,10 @@ class App extends Component {
 
   componentDidMount() {
     console.log('[App.js] componentDidMount')
+  }
+
+  loginHandler = () => {
+    this.setState({ authenticated: true})
   }
 
   // People handlers:
@@ -106,23 +111,32 @@ class App extends Component {
         >
           Remove Cockpit
         </button>
-        { this.state.showCockpit ? (
-          <Cockpit
-            title={this.props.title}
-            peopleLength={this.state.people.length}
-            clicked={this.togglePeopleHandler}
-            showPeople={this.state.showPeople}
-           />
-        ) : null }
-        { people }
-        <p> Type some text to know its length: </p>
-        <p>
-          <input type="text"
-            onChange={ this.displayTextHandler }
-            value={ this.state.userInput} />
-        </p>
-        Chars count: <Validation length={ this.state.userInput.length } />
-        { characters }
+        <AuthContext.Provider 
+          value={
+            {
+              authenticated: this.state.authenticated,
+              login: this.loginHandler
+            }
+          }
+        >
+          { this.state.showCockpit ? (
+            <Cockpit
+              title={this.props.title}
+              peopleLength={this.state.people.length}
+              clicked={this.togglePeopleHandler}
+              showPeople={this.state.showPeople}
+            />
+          ) : null }
+          { people }
+          <p> Type some text to know its length: </p>
+          <p>
+            <input type="text"
+              onChange={ this.displayTextHandler }
+              value={ this.state.userInput} />
+          </p>
+          Chars count: <Validation length={ this.state.userInput.length } />
+          { characters }
+        </AuthContext.Provider>
       </Aux>
     )
   }
