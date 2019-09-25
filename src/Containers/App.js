@@ -5,6 +5,8 @@ import People from '../Components/People/People'
 import Char from '../Components/Char/Char'
 import Validation from '../Components/Validation/Validation'
 import classes from './App.css'
+import Aux from '../HOC/Aux'
+import withClass from '../HOC/withClass'
 
 class App extends Component {
   constructor(props) {
@@ -96,7 +98,7 @@ class App extends Component {
     })
 
     return (
-      <div className={classes.App}>
+      <Aux>
         <button
           onClick={() => {
             this.setState({showCockpit: false})
@@ -121,9 +123,9 @@ class App extends Component {
         </p>
         Chars count: <Validation length={ this.state.userInput.length } />
         { characters }
-      </div>
+      </Aux>
     )
   }
 }
 
-export default App
+export default withClass(App, classes.App)
